@@ -5,3 +5,7 @@ api-version: 1.16
 authors: [ DerBanko, Chat ]
 description: Coding Tutorial Live on Twitch
 website: https://twitch.tv/DerBanko
+
+commands:
+  timer:
+    permission: tutorialreloaded.command.timer
