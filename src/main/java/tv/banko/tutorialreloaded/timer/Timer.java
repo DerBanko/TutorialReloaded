@@ -7,15 +7,23 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import tv.banko.tutorialreloaded.Main;
+import tv.banko.tutorialreloaded.utils.Config;
 
 public class Timer {
 
     private boolean running; // true or false
     private int time;
 
-    public Timer(boolean running, int time) {
-        this.running = running;
-        this.time = time;
+    public Timer() {
+        Config config = Main.getInstance().getConfiguration();
+
+        this.running = false;
+
+        if (config.getConfig().contains("timer.time")) {
+            this.time = config.getConfig().getInt("timer.time");
+        } else {
+            this.time = 0;
+        }
 
         run();
     }
@@ -48,6 +56,12 @@ public class Timer {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GOLD.toString() +
                     ChatColor.BOLD + getTime()));
         }
+    }
+
+    public void save() {
+        Config config = Main.getInstance().getConfiguration();
+
+        config.getConfig().set("timer.time", time);
     }
 
     private void run() {

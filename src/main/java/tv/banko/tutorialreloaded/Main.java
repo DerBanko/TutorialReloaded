@@ -5,19 +5,23 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import tv.banko.tutorialreloaded.commands.TimerCommand;
+import tv.banko.tutorialreloaded.listeners.ExplosionListeners;
 import tv.banko.tutorialreloaded.listeners.JoinListener;
 import tv.banko.tutorialreloaded.listeners.QuitListener;
 import tv.banko.tutorialreloaded.timer.Timer;
+import tv.banko.tutorialreloaded.utils.Config;
 
 public final class Main extends JavaPlugin {
 
     private static Main instance;
 
     private Timer timer;
+    private Config config;
 
     @Override
     public void onLoad() {
         instance = this;
+        config = new Config();
     }
 
     @Override
@@ -27,15 +31,21 @@ public final class Main extends JavaPlugin {
         PluginManager manager = Bukkit.getPluginManager();
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new QuitListener(), this);
+        manager.registerEvents(new ExplosionListeners(), this);
 
         getCommand("timer").setExecutor(new TimerCommand());
 
-        timer = new Timer(false, 0);
+        timer = new Timer();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        timer.save();
+        config.save();
+    }
+
+    public Config getConfiguration() {
+        return config;
     }
 
     public static Main getInstance() {

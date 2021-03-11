@@ -41,6 +41,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <outputDirectory>C:\Users\Lucas\Desktop\Server\plugins</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
