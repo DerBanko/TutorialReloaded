@@ -12,13 +12,10 @@ public class Config {
 
     public Config() {
         File dir = new File("./plugins/TutorialReloaded/");
-
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
         this.file = new File(dir, "config.yml");
-
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -26,7 +23,6 @@ public class Config {
                 e.printStackTrace();
             }
         }
-
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 

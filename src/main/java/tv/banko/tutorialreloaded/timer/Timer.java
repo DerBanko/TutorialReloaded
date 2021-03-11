@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import tv.banko.tutorialreloaded.Main;
+import tv.banko.tutorialreloaded.TutorialReloaded;
 import tv.banko.tutorialreloaded.utils.Config;
 
 public class Timer {
@@ -15,16 +15,13 @@ public class Timer {
     private int time;
 
     public Timer() {
-        Config config = Main.getInstance().getConfiguration();
-
+        Config config = TutorialReloaded.getInstance().getConfiguration();
         this.running = false;
-
         if (config.getConfig().contains("timer.time")) {
             this.time = config.getConfig().getInt("timer.time");
         } else {
             this.time = 0;
         }
-
         run();
     }
 
@@ -46,21 +43,18 @@ public class Timer {
 
     public void sendActionBar() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-
             if (!isRunning()) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED +
                         "Timer ist pausiert"));
                 continue;
             }
-
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GOLD.toString() +
                     ChatColor.BOLD + getTime()));
         }
     }
 
     public void save() {
-        Config config = Main.getInstance().getConfiguration();
-
+        Config config = TutorialReloaded.getInstance().getConfiguration();
         config.getConfig().set("timer.time", time);
     }
 
@@ -68,16 +62,13 @@ public class Timer {
         new BukkitRunnable() {
             @Override
             public void run() {
-
                 sendActionBar();
-
                 if (!isRunning()) {
                     return;
                 }
-
                 setTime(getTime() + 1);
             }
-        }.runTaskTimer(Main.getInstance(), 20, 20);
+        }.runTaskTimer(TutorialReloaded.getInstance(), 20, 20);
     }
 }
 

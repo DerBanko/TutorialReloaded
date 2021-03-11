@@ -4,40 +4,34 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import tv.banko.tutorialreloaded.Main;
+import tv.banko.tutorialreloaded.TutorialReloaded;
 import tv.banko.tutorialreloaded.timer.Timer;
 
 public class TimerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         if(args.length == 0) {
             sendUsage(sender);
             return true;
         }
-
         switch (args[0].toLowerCase()) {
             case "resume": {
-                Timer timer = Main.getInstance().getTimer();
-
+                Timer timer = TutorialReloaded.getInstance().getTimer();
                 if (timer.isRunning()) {
                     sender.sendMessage(ChatColor.RED + "Der Timer läuft bereits.");
                     break;
                 }
-
                 timer.setRunning(true);
                 sender.sendMessage(ChatColor.GRAY + "Der Timer wurde gestartet.");
                 break;
             }
             case "pause": {
-                Timer timer = Main.getInstance().getTimer();
-
+                Timer timer = TutorialReloaded.getInstance().getTimer();
                 if (!timer.isRunning()) {
                     sender.sendMessage(ChatColor.RED + "Der Timer läuft nicht.");
                     break;
                 }
-
                 timer.setRunning(false);
                 sender.sendMessage(ChatColor.GRAY + "Der Timer wurde gestoppt.");
                 break;
@@ -48,9 +42,8 @@ public class TimerCommand implements CommandExecutor {
                             "/timer time <Zeit>");
                     return true;
                 }
-
                 try {
-                    Timer timer = Main.getInstance().getTimer();
+                    Timer timer = TutorialReloaded.getInstance().getTimer();
 
                     timer.setRunning(false);
                     timer.setTime(Integer.parseInt(args[1]));
@@ -61,7 +54,7 @@ public class TimerCommand implements CommandExecutor {
                 break;
             }
             case "reset": {
-                Timer timer = Main.getInstance().getTimer();
+                Timer timer = TutorialReloaded.getInstance().getTimer();
 
                 timer.setRunning(false);
                 timer.setTime(0);

@@ -11,9 +11,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
         event.setJoinMessage(ChatColor.GREEN.toString() + ChatColor.UNDERLINE + player.getName() + " hat den Server betreten.");
-
         player.sendMessage(ChatColor.GOLD + "Willkommen auf dem Server! \n\"Viel Spaß und viel Vergnügen (^:");
     }
 }
