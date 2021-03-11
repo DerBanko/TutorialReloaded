@@ -1,6 +1,6 @@
 name: TutorialReloaded
 version: ${project.version}
-main: tv.banko.tutorialreloaded.Main
+main: tv.banko.tutorialreloaded.TutorialReloaded
 api-version: 1.16
 authors: [ DerBanko, Chat ]
 description: Coding Tutorial Live on Twitch

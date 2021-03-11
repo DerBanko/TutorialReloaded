@@ -11,9 +11,9 @@ import tv.banko.tutorialreloaded.listeners.QuitListener;
 import tv.banko.tutorialreloaded.timer.Timer;
 import tv.banko.tutorialreloaded.utils.Config;
 
-public final class Main extends JavaPlugin {
+public final class TutorialReloaded extends JavaPlugin {
 
-    private static Main instance;
+    private static TutorialReloaded instance;
 
     private Timer timer;
     private Config config;
@@ -27,14 +27,11 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "HALLO!");
-
         PluginManager manager = Bukkit.getPluginManager();
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new QuitListener(), this);
         manager.registerEvents(new ExplosionListeners(), this);
-
         getCommand("timer").setExecutor(new TimerCommand());
-
         timer = new Timer();
     }
 
@@ -48,7 +45,7 @@ public final class Main extends JavaPlugin {
         return config;
     }
 
-    public static Main getInstance() {
+    public static TutorialReloaded getInstance() {
         return instance;
     }
 
