@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import tv.banko.tutorialreloaded.backpack.BackpackManager;
+import tv.banko.tutorialreloaded.commands.BackpackCommand;
 import tv.banko.tutorialreloaded.commands.TimerCommand;
 import tv.banko.tutorialreloaded.listeners.ExplosionListeners;
 import tv.banko.tutorialreloaded.listeners.JoinListener;
@@ -17,6 +19,7 @@ public final class Main extends JavaPlugin {
 
     private Timer timer;
     private Config config;
+    private BackpackManager backpackManager;
 
     @Override
     public void onLoad() {
@@ -34,25 +37,33 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ExplosionListeners(), this);
 
         getCommand("timer").setExecutor(new TimerCommand());
+        getCommand("backpack").setExecutor(new BackpackCommand());
 
         timer = new Timer();
+        backpackManager = new BackpackManager();
     }
 
     @Override
     public void onDisable() {
         timer.save();
-        config.save();
-    }
+        backpackManager.save();
 
-    public Config getConfiguration() {
-        return config;
+        config.save();
     }
 
     public static Main getInstance() {
         return instance;
     }
 
+    public Config getConfiguration() {
+        return config;
+    }
+
     public Timer getTimer() {
         return timer;
+    }
+
+    public BackpackManager getBackpackManager() {
+        return backpackManager;
     }
 }

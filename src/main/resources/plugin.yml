@@ -9,3 +9,5 @@ website: https://twitch.tv/DerBanko
 commands:
   timer:
     permission: tutorialreloaded.command.timer
+  backpack:
+    aliases: [ bp ]
