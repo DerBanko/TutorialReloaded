@@ -2,15 +2,23 @@ package tv.banko.tutorialreloaded.scoreboard;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import tv.banko.tutorialreloaded.Main;
 
 public class TestScoreboard extends ScoreboardBuilder {
 
+    private int socialId;
+
     public TestScoreboard(Player player) {
         super(player, ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + "  twitch.tv/DerBanko  ");
+        socialId = 0;
+
+        run();
     }
 
     @Override
     public void createScoreboard() {
+        setScore("test", 8);
         setScore(ChatColor.DARK_GRAY.toString(), 7);
         setScore(ChatColor.GRAY + "Dein Rang" + ChatColor.DARK_GRAY + ":", 6);
 
@@ -30,5 +38,32 @@ public class TestScoreboard extends ScoreboardBuilder {
     @Override
     public void update() {
 
+    }
+
+    private void run() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+
+                switch (socialId) {
+                    case 0:
+                        setScore(ChatColor.AQUA + "twitter.com/DerBanko", 3);
+                        break;
+                    case 1:
+                        setScore(ChatColor.DARK_PURPLE + "twitch.tv/DerBanko", 3);
+                        break;
+                    case 2:
+                        setScore(ChatColor.DARK_RED + "youtube.com/DerBanko", 3);
+                        break;
+                }
+
+                socialId++;
+
+                if(socialId >= 3) {
+                    socialId = 0;
+                }
+
+            }
+        }.runTaskTimer(Main.getInstance(), 20, 20);
     }
 }

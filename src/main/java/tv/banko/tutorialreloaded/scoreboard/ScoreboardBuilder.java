@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public abstract class ScoreboardBuilder {
 
@@ -41,10 +42,73 @@ public abstract class ScoreboardBuilder {
     }
 
     public void setScore(String content, int score) {
-        this.objective.getScore(content).setScore(score);
+        Team team = getTeamByScore(score);
+
+        if(team == null) {
+            return;
+        }
+
+        team.setPrefix(content);
+        showScore(score);
     }
 
-    public void removeScore(String content) {
-        this.scoreboard.resetScores(content);
+    public void removeScore(int score) {
+        hideScore(score);
+    }
+
+    private EntryName getEntryNameByScore(int score) {
+        for(EntryName name : EntryName.values()) {
+            if(score == name.getEntry()) {
+                return name;
+            }
+        }
+
+        return null;
+    }
+
+    private Team getTeamByScore(int score) {
+        EntryName name = getEntryNameByScore(score);
+
+        if(name == null) {
+            return null;
+        }
+
+        Team team = scoreboard.getEntryTeam(name.getEntryName());
+
+        if(team != null) {
+            return team;
+        }
+
+        team = scoreboard.registerNewTeam(name.name());
+        team.addEntry(name.getEntryName());
+        return team;
+    }
+
+    private void showScore(int score) {
+        EntryName name = getEntryNameByScore(score);
+
+        if(name == null) {
+            return;
+        }
+
+        if(objective.getScore(name.getEntryName()).isScoreSet()) {
+            return;
+        }
+
+        objective.getScore(name.getEntryName()).setScore(score);
+    }
+
+    private void hideScore(int score) {
+        EntryName name = getEntryNameByScore(score);
+
+        if(name == null) {
+            return;
+        }
+
+        if(!objective.getScore(name.getEntryName()).isScoreSet()) {
+            return;
+        }
+
+        scoreboard.resetScores(name.getEntryName());
     }
 }
